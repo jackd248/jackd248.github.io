@@ -434,6 +434,10 @@ footer {
     font-size: 14px;
 }
 
+footer a {
+    color: #999999;
+}
+
 @media screen and (max-width: 1280px) {
     #preview img {
         width: 400px;
