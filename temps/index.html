@@ -96,7 +96,7 @@
                                 <h3>Windows</h3>
                                 <p>
                                     <a href="https://github.com/jackd248/temps/releases/download/v0.5.0/Temps-win32-ia32.zip">32bit</a><br/>
-                                    <a href="https://github.com/jackd248/temps/releases/download/v0.5.0/Temps-win64-ia32.zip">64bit</a>
+                                    <a href="https://github.com/jackd248/temps/releases/download/v0.5.0/Temps-win32-x64.zip">64bit</a>
                                 </p>
                             </div>
                             <div class="download-item">
@@ -132,22 +132,6 @@
                 &copy; 2016 <a href="http://konradmichalik.eu/" target="_blank">Konrad Michalik</a>. MIT licensed
             </footer>
         </div>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/jquery.bxslider.min.js"></script>
-        <script>
-            function cycleImages(){
-                var $active = $('#preview .active');
-                var $next = ($active.next().length > 0) ? $active.next() : $('#preview img:first');
-                $next.removeAttr('class');
-                $active.addClass('animated').addClass('fadeOutLeft').removeClass('active');
-                //$active.delay(600).removeAttr('class');
-                $next.addClass('animated').addClass('fadeInRight').addClass('active');
-
-            }
-            jQuery(document).ready(function() {
-                setInterval('cycleImages()', 3000);
-            });
-        </script>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
