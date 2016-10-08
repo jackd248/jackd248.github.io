@@ -25,16 +25,25 @@
 
 
         <link rel="stylesheet" href="css/normalize.css">
-        <link href="css/jquery.bxslider.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="css/animate.min.css">
         <link rel="stylesheet" href="css/main.css">
 
-        <script src="js/modernizr.custom.js"></script>
+        <!--<script src="js/modernizr.custom.js"></script>-->
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.8&appId=1842935322603205";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
         <div class="wrapper">
             <header>
                 <div class="pull-left">
@@ -82,11 +91,11 @@
                 <img src="img/temps-preview.png" alt="preview" width="500" class="active"/>
             </div>
 
-            <section id="more">
+            <section class="more">
                 <div class="wrap">
                     <div class="content">
                         <a name="download">
-                            <h2>Downloads</h2>
+                            <h2>Downloads <span>v0.6.0</span></h2>
                         </a>
                         <p>
                             Temps is cross-platform and open source. Downloads are available for:
@@ -117,13 +126,73 @@
                             Temps uses code from several open source projects like <a href="http://electron.atom.io/">Electron</a>, <a href="https://github.com/maxogden/menubar">Menubar</a>, <a href="http://www.chartjs.org/">Chart.js</a> and <a href="http://openweathermap.org/">OpenWeatherMap</a>.
                         </p>
                         <p>
-                            You need a free API Key by OpenWeatherMap to fetch weather information.
+                            Source code is available at <a href="https://github.com/jackd248/temps">Github</a>. You can report <a href="https://github.com/jackd248/temps/issues">issues</a> and send <a href="https://github.com/jackd248/temps/pulls">pull requests</a> there.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="more">
+                <div class="wrap clearfix">
+                    <div class="content pull-left">
+                        <h2>Instructions</h2>
+                        <p>
+                            You need a free API Key by <a href="http://openweathermap.org/">OpenWeatherMap</a> to fetch weather information.
                         </p>
                         <p>
-                            Source code is available at <a href="https://github.com/jackd248/temps">Github</a>. You can report issues and send pull requests there.
+                            Because of this is a non-profit project, I'm not able to offer unlimited access to weather information by myself.
+                        </p>
+                        <p>
+                            For the start you can use the built-in key to get the weather data. But it can be possible with heavy data traffic, that the service isn't available for this key all the time.
+                        </p>
+                        <p>
+                            The apps are also not signed for now. So you need to grant usage by the system to run the app.
+                        </p>
+                    </div>
+                    <div class="sidebar pull-right">
+                        <h4>Usage</h4>
+                        <p class="shortcuts">
+                            <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>W</kbd> <span class="pull-right">Global shortcut</span><br/>
+                            <kbd>Cmd</kbd> + <kbd>D</kbd> <span class="pull-right">Switch details </span><br/>
+                            <kbd>Cmd</kbd> + <kbd>S</kbd> <span class="pull-right">Open settings</span><br/>
+                            <kbd>Cmd</kbd> + <kbd>F</kbd> <span class="pull-right">Reload favorite city</span><br/>
+                            <kbd>Cmd</kbd> + <kbd>R</kbd> <span class="pull-right">Reload application</span><br/>
+                            <kbd>Cmd</kbd> + <kbd>E</kbd> <span class="pull-right">Reload weather data</span><br/>
+                            <kbd>Cmd</kbd> + <kbd>W</kbd> <span class="pull-right">Search random city</span><br/>
+                            <kbd>Cmd</kbd> + <kbd>G</kbd> <span class="pull-right">Find your location</span><br/>
+                            <kbd>Cmd</kbd> + <kbd>Q</kbd> <span class="pull-right">Close application</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section class="more">
+                <div class="wrap clearfix">
+                    <div class="content pull-left">
+
+                        <h2>Information</h2>
+                        <p>
+                            So I hope you enjoy using temps. If you have any feedback or ideas, feel free to contact me via email: <a href="mailto:support@konradmichalik.eu">support@konradmichalik.eu</a>.
+                        </p>
+                        <p>
+                            The weather icons are made by myself. If you like to use them in your own project, you can find the icons on <a href="https://github.com/jackd248/weather-iconic" target="_blank">Github</a> or <a href="https://thenounproject.com/konradmichalik/collection/weather/" target="_blank">Noun Project</a>.
                         </p>
 
                     </div>
+                    <div class="sidebar pull-right">
+                        <h4>Stuff</h4>
+                        <p>
+                            <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://jackd248.github.io/temps/" data-text="Check out temps; a simple but smart weather app" data-size="large">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                        </p>
+                        <p>
+                            <div class="fb-like" data-href="https://jackd248.github.io/temps/" data-layout="button" data-action="recommend" data-size="large" data-show-faces="true" data-share="true"></div>
+                        </p>
+                        <p>
+                            <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script><script type ='text/javascript'>kofiwidget2.init('Buy Me a Coffee', '#46b798', 'A203C9Q');kofiwidget2.draw();</script>
+                        </p>
+
+                    </div>
+                    <p>
+                        <img src="img/screenshot-overview.png" class="width100 views" alt="temps preview views" />
+                    </p>
                 </div>
             </section>
 

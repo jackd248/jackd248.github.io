@@ -289,6 +289,18 @@ h2 {
     font-size: 36px;
 }
 
+h2 span {
+    font-size: 16px;
+    color: #666666;
+}
+
+h4 {
+    font-weight: 100;
+    font-size: 28px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
 
 a {
     text-decoration: none;
@@ -376,8 +388,22 @@ header .nav img {
     padding: 40px 0;
 }
 
+.no-padding {
+    padding: 0px;
+}
+
+.width100 {
+    width: 100%;
+}
+
 .content {
     width: 640px;
+}
+
+.sidebar {
+    width: 320px;
+    padding-left: 20px;
+    box-sizing: border-box;
 }
 
 #intro {
@@ -400,13 +426,13 @@ li {
     width: 500px;
 }
 
-#more {
+.more {
     width: 100%;
     background-color: #333333;
     color: #FFFFFF
 }
 
-#more h2 {
+.more h2 {
     color: #FFFFFF;
 }
 
@@ -420,6 +446,32 @@ li {
     width: 150px;
     float: left;
     text-align: center;
+}
+
+kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 10px;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fcfcfc;
+    border: solid 1px #ccc;
+    border-bottom-color: #bbb;
+    border-radius: 3px;
+    box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.shortcuts {
+    line-height: 32px;
+}
+
+.shortcuts span {
+    display: inline-block;
+}
+
+.views {
+    margin-top: 100px;
 }
 
 footer {
@@ -470,6 +522,11 @@ footer a {
         width: 100%;
     }
 
+    .sidebar {
+        width: 400px;
+        float: left;
+    }
+
     #preview {
         position: relative;
         top: 0px;
@@ -499,6 +556,9 @@ footer a {
     }
     #preview img {
         width: 300px;
+    }
+    .sidebar {
+        width: 100%;
     }
 }
 
