@@ -349,7 +349,7 @@ header h1 {
 }
 
 header h1 img {
-    width: 200px;
+    width: 150px;
 }
 
 header .nav {
@@ -397,7 +397,7 @@ header .nav img {
 }
 
 .content {
-    width: 640px;
+    width: 620px;
 }
 
 .sidebar {
@@ -446,6 +446,11 @@ li {
     width: 150px;
     float: left;
     text-align: center;
+}
+
+#count {
+    font-size: 48px;
+    color: #666666;
 }
 
 kbd {
