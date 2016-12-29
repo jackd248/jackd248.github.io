@@ -7,7 +7,7 @@ class Validation
      * @var array
      */
     private $parameters = [
-        'username'
+        'jackd248'
     ];
 
     /**
