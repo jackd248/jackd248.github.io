@@ -1,0 +1,141 @@
+:root {
+    --color-primary: #323A45;
+    --color-primary--light: #CFD8DC;
+    --color-secondary: #E57373;
+    --color-secondary--light: #FFEBEE;
+}
+
+* {
+    font-family: "Overpass", sans-serif;
+    font-optical-sizing: auto;
+}
+
+body {
+    font-size: 1.5em;
+    line-height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+}
+
+.wrapper {
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+@media screen and (max-width:720px) {
+    header {
+        flex-direction: column;
+    }
+}
+
+nav a:first-child {
+    width: 40px;
+    height: 40px;
+    padding: 0.5em;
+    display: inline-block;
+    text-align: center;
+    vertical-align: text-bottom;
+}
+
+nav a:hover svg path {
+    fill: var(--color-secondary);
+}
+
+main {
+    margin: 1em;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+    font-size: 50%;
+}
+
+footer svg {
+    margin: 0 .25em;
+    fill: var(--color-secondary);
+}
+
+h1 span {
+    color: var(--color-secondary);
+}
+
+mark {
+    background-color: var(--color-secondary--light);
+    padding: .5em;
+}
+
+.muted {
+    color: var(--color-primary--light)
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: var(--color-secondary);
+}
+
+a:hover {
+    cursor: pointer;
+    color: var(--color-secondary);
+    text-decoration-color: var(--color-primary);
+}
+
+section .wrapper {
+    background-color: #efefef;
+    width: 1200px;
+    height: 800px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    background-image: url('../media/preview.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+#preview {
+    width: 249px;
+    height: 124px;
+    position: absolute;
+    top: 354px;
+    left: 494px;
+    overflow: hidden;
+    margin: 0;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 2px;
+    font-family: "Chakra Petch", sans-serif;
+    box-sizing: border-box;
+}
+
+#preview-clock {
+    position: absolute;
+    top: 466px;
+    left: 726px;
+    font-size: 7px;
+    line-height: 10px;
+    font-family: "Chakra Petch", sans-serif;
+}
+
+@media screen and (max-width:1200px) {
+    section .wrapper {
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.hidden {
+    display: none;
+}
