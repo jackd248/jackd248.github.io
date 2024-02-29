@@ -3,7 +3,7 @@
 let arrLang = {
     "de-de": {
         "intro-1": `Einfaches <em>DIY</em> Projekt um <a href="https://chat.openai.com/" target="_blank">KI</a> generierte`,
-        "poems": "Gedicht",
+        "poems": "Gedichte",
         "intro-2": "basierend auf der aktuellen Uhrzeit",
         "intro-3": `auf einem <a href="https://www.waveshare.com/epaper" target="_blank">E-Ink Display</a> mit <a href="https://www.raspberrypi.com/products/raspberry-pi-zero/" target="_blank">Raspberry Pi Zero</a> zu rendern`,
         "installation": "Das gesamte Projekt Log sowie weitere Installationsanleitungen finden sich auf",
