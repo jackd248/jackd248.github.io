@@ -12,7 +12,13 @@ function updateTime() {
     let hour = time.split(":")[0]
     readJsonFile(collectionEndpoint + time.split(":")[0] + "/" + time.replace(":", "") + ".json", function(text){
         let data = JSON.parse(text);
-        document.getElementById('preview').innerText = data[Math.floor(Math.random() * data.length)];
+        let poem = data[Math.floor(Math.random() * data.length)];
+        if (poem.split(" ").length > 25) {
+            document.getElementById('preview').style.fontSize = '12px';
+        } else {
+            document.getElementById('preview').style.fontSize = '18px';
+        }
+        document.getElementById('preview').innerText = poem;
     });
     document.getElementById('preview-clock').innerText = time;
     document.getElementById('clock').innerText = time;
