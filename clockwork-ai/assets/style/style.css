@@ -31,7 +31,7 @@ header {
     margin: 1em;
 }
 
-@media screen and (max-width:720px) {
+@media screen and (max-width: 720px) {
     header {
         flex-direction: column;
     }
@@ -54,6 +54,10 @@ main {
     margin: 1em;
 }
 
+p {
+    margin: 2em 0;
+}
+
 footer {
     display: flex;
     align-items: center;
@@ -74,6 +78,19 @@ h1 span {
 mark {
     background-color: var(--color-secondary--light);
     padding: .5em;
+}
+
+.center {
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 800px) {
+    .center {
+        width: 100%;
+    }
 }
 
 .muted {
@@ -129,7 +146,7 @@ section .wrapper {
     font-family: "Chakra Petch", sans-serif;
 }
 
-@media screen and (max-width:1200px) {
+@media screen and (max-width: 1200px) {
     section .wrapper {
         margin-left: 50%;
         transform: translateX(-50%);
