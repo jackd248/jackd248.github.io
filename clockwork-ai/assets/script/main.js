@@ -18,7 +18,7 @@ function updateTime() {
         } else {
             document.getElementById('preview').style.fontSize = '18px';
         }
-        document.getElementById('preview').innerText = poem;
+        blink(poem);
     });
     document.getElementById('preview-clock').innerText = time;
     document.getElementById('clock').innerText = time;
@@ -35,4 +35,14 @@ function readJsonFile(file, callback) {
         }
     }
     rawFile.send(null);
+}
+
+function blink(text) {
+    document.getElementById('preview').classList.add('refresh');
+    setTimeout(() => {
+        document.getElementById('preview').innerText = text;
+    }, 500);
+    setTimeout(() => {
+        document.getElementById('preview').classList.remove('refresh');
+    }, 1000);
 }

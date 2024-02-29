@@ -135,6 +135,7 @@ section .wrapper {
     padding: 2px;
     font-family: "Chakra Petch", sans-serif;
     box-sizing: border-box;
+    transition: background-color ease;
 }
 
 #preview-clock {
@@ -155,4 +156,17 @@ section .wrapper {
 
 .hidden {
     display: none;
+}
+
+.refresh {
+    animation: eInkAnimation .5s 2;
+}
+
+@keyframes eInkAnimation {
+    0%, 100% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: var(--color-primary);
+    }
 }
