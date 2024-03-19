@@ -6,6 +6,15 @@ setInterval(() => {
     updateTime();
 }, 60000);
 
+document.getElementById("preview-reload").addEventListener("click", function(event) {
+    updateTime();
+
+    const button = document.querySelector("#preview-reload button");
+    button.classList.add("reload");
+    setInterval(() => {
+        button.classList.remove("reload");
+    }, 1500);
+});
 
 function updateTime() {
     let time = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
