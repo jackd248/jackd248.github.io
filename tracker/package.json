@@ -1,0 +1,53 @@
+{
+  "name": "tracker",
+  "version": "1.0.0",
+  "license": "proprietary",
+  "engines": {
+    "npm": ">=10.0.0 <11.0.0",
+    "node": ">=21.0.0 <22.0.0"
+  },
+  "scripts": {
+    "start": "npm-run-all -p ts:watch",
+    "build": "npm-run-all -s ts:build",
+    "ts:watch": "node esbuild.config.mjs --watch",
+    "ts:build": "node esbuild.config.mjs --build",
+    "ts:fix": "npx eslint packages/xima_zsh_sitepackage/Resources/Private/TypeScript --fix",
+    "ts:lint": "npx eslint packages/xima_zsh_sitepackage/Resources/Private/TypeScript",
+    "ts:format": "npx prettier --config .prettierrc packages/xima_zsh_sitepackage/Resources/Private/TypeScript --write",
+    "html:format": "npx prettier --config .prettierrc packages/xima_zsh_sitepackage/Resources/Private/Extensions --write",
+    "ncu": "npx npm-check-updates --interactive --format group"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "autoprefixer": "^10.4.16",
+    "axe-core": "^4.8.2",
+    "esbuild": "^0.19.4",
+    "esbuild-plugin-stimulus": "^0.1.5",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-svelte": "^2.35.1",
+    "npm-check-updates": "^16.14.5",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "prettier-plugin-tailwindcss": "^0.5.5",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo": "^8.0.2",
+    "@splidejs/splide": "^4.1.4",
+    "@splidejs/splide-extension-grid": "^0.4.1",
+    "bootstrap": "^5.3.2",
+    "cssnano": "^6.0.1",
+    "esbuild-svelte": "^0.8.0",
+    "photoswipe": "^5.4.2",
+    "stimulus": "^3.2.2",
+    "svelte": "^4.2.2",
+    "svelte-preprocess": "^5.0.4",
+    "leaflet": "^1.9.0"
+  }
+}
