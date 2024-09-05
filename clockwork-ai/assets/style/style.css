@@ -71,8 +71,14 @@ footer svg {
     fill: var(--color-secondary);
 }
 
-h1 span {
+h1 span, h3 span {
     color: var(--color-secondary);
+    margin-right: .5em;
+}
+
+h3 {
+    display: inline;
+    margin: 0;
 }
 
 mark {
@@ -93,6 +99,10 @@ mark {
     }
 }
 
+.small {
+    font-size: 70%;
+}
+
 .muted {
     color: var(--color-primary--light)
 }
@@ -110,7 +120,7 @@ a:hover {
     text-decoration-color: var(--color-primary);
 }
 
-section .wrapper {
+.preview-wrapper {
     background-color: #efefef;
     width: 1200px;
     height: 800px;
@@ -122,7 +132,29 @@ section .wrapper {
     background-position: center;
 }
 
-#preview {
+.standalone {
+    height: 100vh;
+}
+
+.standalone .wrapper {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 100vh;
+}
+
+.standalone footer {
+    position: absolute;
+    bottom: 0;
+    opacity: 0.5;
+    transition: opacity ease;
+}
+
+.standalone footer:hover {
+    opacity: 1;
+}
+
+.preview-poem {
     width: 249px;
     height: 124px;
     position: absolute;
@@ -138,7 +170,15 @@ section .wrapper {
     transition: background-color ease;
 }
 
-#preview-clock {
+.standalone-poem {
+    margin: 0;
+    font-size: 48px;
+    line-height: 64px;
+    padding: 2px;
+    font-family: "Lexend", sans-serif;
+}
+
+.preview-clock {
     position: absolute;
     top: 466px;
     left: 726px;
@@ -147,7 +187,13 @@ section .wrapper {
     font-family: "Chakra Petch", sans-serif;
 }
 
-#preview-reload {
+.standalone-clock {
+    font-size: 12px;
+    line-height: 10px;
+    font-family: "Chakra Petch", sans-serif;
+}
+
+.preview-reload, .standalone-reload {
     position: absolute;
     bottom: 5px;
     left: 5px;
@@ -155,7 +201,13 @@ section .wrapper {
     height: 30px;
 }
 
-#preview-reload button {
+.standalone-reload {
+    opacity: 0.5;
+    bottom: 20px;
+    left: 20px;
+}
+
+.preview-reload button, .standalone-reload button {
     border: none;
     background: transparent;
     margin: 0;
@@ -165,11 +217,11 @@ section .wrapper {
     transition: all .5s ease;
 }
 
-#preview-reload button:hover {
+.preview-reload button:hover, .standalone-reload button:hover {
     cursor: pointer;
 }
 
-#preview-reload button.reload svg {
+.preview-reload button.reload svg, .standalone-reload button.reload svg {
     animation-name: rotate;
     animation-duration: 1s;
 }

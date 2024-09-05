@@ -22,15 +22,20 @@ function updateTime() {
     readJsonFile(collectionEndpoint + time.split(":")[0] + "/" + time.replace(":", "") + ".json", function(text){
         let data = JSON.parse(text);
         let poem = data[Math.floor(Math.random() * data.length)];
-        if (poem.split(" ").length > 25) {
-            document.getElementById('preview').style.fontSize = '12px';
+        if (document.getElementById('preview-wrapper')) {
+            if (poem.split(" ").length > 25) {
+                document.getElementById('poem').style.fontSize = '12px';
+            } else {
+                document.getElementById('poem').style.fontSize = '18px';
+            }
+            blink(poem);
         } else {
-            document.getElementById('preview').style.fontSize = '18px';
+            document.getElementById('poem').innerText = poem;
         }
-        blink(poem);
     });
-    document.getElementById('preview-clock').innerText = time;
-    document.getElementById('clock').innerText = time;
+    document.querySelectorAll('.clock').forEach((element) => {
+        element.innerText = time;
+    });
 }
 
 function readJsonFile(file, callback) {
@@ -47,11 +52,11 @@ function readJsonFile(file, callback) {
 }
 
 function blink(text) {
-    document.getElementById('preview').classList.add('refresh');
+    document.getElementById('poem').classList.add('refresh');
     setTimeout(() => {
-        document.getElementById('preview').innerText = text;
+        document.getElementById('poem').innerText = text;
     }, 500);
     setTimeout(() => {
-        document.getElementById('preview').classList.remove('refresh');
+        document.getElementById('poem').classList.remove('refresh');
     }, 1000);
 }
