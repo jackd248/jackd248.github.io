@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random 1x1 Calculation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Roboto", sans-serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 90vh;
+            box-sizing: border-box;
+        }
+        main {
+            font-size: 100px;
+            font-weight: 900;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button {
+            padding: 2em;
+            font-size: 16px;
+            border: none;
+            background-color: #eee;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+    </style>
+    <script>
+        let num1, num2;
+
+        function generateRandomCalculation() {
+            num1 = Math.floor(Math.random() * 10) + 1;
+            num2 = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('calculation').innerText = `${num1} x ${num2}`;
+        }
+
+        function showResult() {
+            const result = num1 * num2;
+            document.getElementById('calculation').innerText = `${num1} x ${num2} = ${result}`;
+        }
+
+        // Generate a random calculation when the page loads
+        window.onload = generateRandomCalculation;
+    </script>
+</head>
+<body>
+<main>
+    <div id="calculation"></div>
+</main>
+<footer>
+    <button onclick="showResult()">🧮 Result</button>
+    <button onclick="generateRandomCalculation()">🆕New</button>
+</footer>
+</body>
+</html>
