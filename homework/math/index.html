@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <title>Random 1x1 Calculation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@
             margin: 0;
         }
         main {
-            font-size: 25vw;
+            font-size: 20vh;
             font-weight: 700;
             flex-grow: 1;
             display: flex;
@@ -33,18 +33,21 @@
             justify-content: center;
             text-align: center;
         }
+        button {
+            padding: 1em;
+            font-size: 2vh;
+            border: none;
+            background-color: #eee;
+        }
+        button:hover, button.active {
+            background-color: #ddd;
+            cursor: pointer;
+        }
         #result {
             color: #666;
         }
-        button {
-            padding: 2em;
-            font-size: 3.5vw;
-            border: none;
-            background-color: #eee;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #ddd;
+        footer button {
+            font-size: 5vh;
         }
         #counter {
             display: block;
@@ -54,9 +57,18 @@
             font-size: .75em;
             color: #666;
         }
+        @media (max-width: 768px) {
+            main {
+                font-size: 10vh;
+            }
+            footer button {
+                font-size: 3vh;
+            }
+        }
     </style>
     <script>
-        let num1, num2;
+        let num1, num2, num3,  result;
+        let level = 1;
         let counter = 0;
 
         function generateRandomCalculation() {
@@ -65,22 +77,58 @@
             document.getElementById('result').innerText = '';
             num1 = Math.floor(Math.random() * 10) + 1;
             num2 = Math.floor(Math.random() * 10) + 1;
-            document.getElementById('calculation').innerText = `${num1} x ${num2}`;
+            result = num1 * num2;
+            let calculation = '';
+            switch (level) {
+                case 1:
+                    calculation = `${num1} x ${num2}`;
+                    break;
+                case 2:
+                    calculation = `${result} : ${num1}`;
+                    break;
+                case 3:
+                    num3 = Math.floor(Math.random() * 10) + 1;
+                    result = num1 * num2 * num3;
+                    calculation = `${num1} x ${num2} x ${num3}`;
+                    break;
+            }
+            document.getElementById('calculation').innerText = `${calculation}`;
             document.getElementById('newCalculationButton').style.display = 'none';
             document.getElementById('showResultButton').style.display = 'inline';
         }
 
         function showResult() {
-            const result = num1 * num2;
-            document.getElementById('result').innerText = `= ${result}`;
+            let currentResult = '';
+            switch (level) {
+                case 1:
+                case 3:
+                    currentResult = result;
+                    break;
+                case 2:
+                    currentResult = num2;
+                    break;
+            }
+            document.getElementById('result').innerText = `= ${currentResult}`;
             document.getElementById('showResultButton').style.display = 'none';
             document.getElementById('newCalculationButton').style.display = 'inline';
+        }
+
+        function changeLevel(newLevel) {
+            level = newLevel;
+            document.querySelectorAll('.level').forEach(button => button.classList.remove('active'));
+            document.getElementById(`level${newLevel}`).classList.add('active');
+            generateRandomCalculation();
         }
 
         window.onload = generateRandomCalculation;
     </script>
 </head>
 <body>
+<header>
+    <button id="level1" class="level active" onclick="changeLevel(1)">Level 1</button>
+    <button id="level2" class="level" onclick="changeLevel(2)">Level 2</button>
+    <button id="level3" class="level" onclick="changeLevel(3)">Level 3</button>
+</header>
 <main>
     <div id="calculation"></div>
     <div id="result"></div>
