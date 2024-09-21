@@ -70,6 +70,7 @@
             font-size: 20vh;
             border: 0;
             border-bottom: 1px solid #666;
+            border-radius: 0;
             background: transparent;
         }
 
@@ -97,7 +98,7 @@
 
         #bar {
             margin-top: 5px;
-            font-size: 12px;
+            font-size: 10px;
         }
 
         #highScore {
@@ -157,10 +158,11 @@
         let level = 1;
         let counter = 0;
         const maxLife = 3;
-        const winCount = 15;
+        const winCount = 30;
         let life = 3;
         let startTime, endTime;
         const levelSymbols = ['🟦', '🟨', '🟧', '🟥'];
+        const localStorageKey = 'mathGame';
 
         document.addEventListener("DOMContentLoaded", function(event) {
             let vh = window.innerHeight * 0.01;
@@ -177,7 +179,7 @@
 
         function generateRandomCalculation() {
             counter++;
-            changeLevel(Math.floor(counter / 5) + 1);
+            changeLevel(Math.floor(counter / 10) + 1);
             renderProgressBar();
             document.getElementById('calculationResult').style.color = '#666';
             document.getElementById('resultInput').style.borderColor = '#666';
@@ -347,18 +349,19 @@
         }
 
         function saveHighScore(time, lives) {
-            const highScore = localStorage.getItem('highScore');
-            const currentScore = {time, lives};
+            const highScore = localStorage.getItem(mathGame);
+            const currentDate = new Date().toLocaleDateString();
+            const currentScore = { time, lives, date: currentDate };
 
             if (!highScore) {
-                localStorage.setItem('highScore', JSON.stringify(currentScore));
+                localStorage.setItem(mathGame, JSON.stringify(currentScore));
                 return currentScore;
             }
 
             const parsedHighScore = JSON.parse(highScore);
 
             if (isBetterScore(currentScore, parsedHighScore)) {
-                localStorage.setItem('highScore', JSON.stringify(currentScore));
+                localStorage.setItem(mathGame, JSON.stringify(currentScore));
                 return currentScore;
             }
 
@@ -375,14 +378,14 @@
         }
 
         function displayHighScore() {
-            const highScore = localStorage.getItem('highScore');
+            const highScore = localStorage.getItem(mathGame);
             if (highScore) {
-                const {time, lives} = JSON.parse(highScore);
+                const { time, lives, date } = JSON.parse(highScore);
                 let formattedLifes = '';
                 for (let i = 0; i < lives; i++) {
                     formattedLifes += '❤️';
                 }
-                document.getElementById('highScore').innerHTML = `<strong>🥇High Score</strong><br/> ${formattedLifes}<br/>${formatElapsedTime(time)}`;
+                document.getElementById(mathGame).innerHTML = `<strong>🥇High Score</strong><br/> ${formattedLifes}<br/>${formatElapsedTime(time)}<br/>📅 ${date}`;
             }
         }
 
