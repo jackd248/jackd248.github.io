@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
     <title>Math Game</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -106,6 +107,7 @@
             color: #666;
             margin-top: 1em;
         }
+
         #dailyStreak {
             display: block;
             position: absolute;
@@ -113,6 +115,12 @@
             left: 1em;
             font-size: 1em;
             color: #666;
+        }
+
+        button[data-theme-toggle] {
+            position: absolute;
+            top: 1em;
+            right: 1em;
         }
 
         @media (max-width: 768px) {
@@ -127,20 +135,25 @@
             footer button {
                 font-size: 3vh;
             }
+
             body {
                 padding: 2em 1em;
+            }
+
+            button[data-theme-toggle] {
+                padding: .375em;
             }
         }
 
         body.flash-green {
-            animation: flashGreen .25s ease-in-out;
+            animation: flashGreenWhiteBlack .25s ease-in-out;
         }
 
         body.flash-red {
-            animation: flashRed .25s ease-in-out;
+            animation: flashRedBlack .25s ease-in-out;
         }
 
-        @keyframes flashGreen {
+        @keyframes flashGreenWhite {
             0% {
                 background-color: white;
             }
@@ -152,7 +165,7 @@
             }
         }
 
-        @keyframes flashRed {
+        @keyframes flashRedWhite {
             0% {
                 background-color: white;
             }
@@ -162,6 +175,65 @@
             100% {
                 background-color: white;
             }
+        }
+        @keyframes flashGreenBlack {
+            0% {
+                background-color: black;
+            }
+            5% {
+                background-color: green;
+            }
+            100% {
+                background-color: black;
+            }
+        }
+
+        @keyframes flashRedBlack {
+            0% {
+                background-color: black;
+            }
+            5% {
+                background-color: red;
+            }
+            100% {
+                background-color: black;
+            }
+        }
+
+        /* Dark mode styles */
+        html[data-theme="dark"] body.flash-green {
+            animation: flashGreenWhiteBlack .25s ease-in-out;
+        }
+
+        html[data-theme="dark"] body.flash-red {
+            animation: flashRedBlack .25s ease-in-out;
+        }
+
+        html[data-theme="dark"] body {
+            background-color: black;
+            color: white;
+        }
+
+        html[data-theme="dark"] button {
+            background-color: #333;
+            color: white;
+        }
+
+        html[data-theme="dark"] button:hover, html[data-theme="dark"] button.active {
+            background-color: #444;
+        }
+
+        html[data-theme="dark"] #calculationResult {
+            color: #ccc;
+        }
+
+        html[data-theme="dark"] #resultInput {
+            border-color: #ccc;
+            color: white;
+        }
+
+        html[data-theme="dark"] #counter, html[data-theme="dark"] #life, html[data-theme="dark"] #highScore, html[data-theme="dark"] #dailyStreak {
+            color: #ccc;
         }
     </style>
     <script>
@@ -178,7 +250,7 @@
         let previousCalculations = [];
 
 
-        document.addEventListener("DOMContentLoaded", function(event) {
+        document.addEventListener("DOMContentLoaded", function (event) {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
 
@@ -302,7 +374,7 @@
 
             let barHtml = '';
             for (let i = 0; i < counter; i++) {
-                barHtml += levelSymbols[level-1];
+                barHtml += levelSymbols[level - 1];
             }
             for (let i = counter; i < winCount; i++) {
                 barHtml += '⬜';
@@ -373,7 +445,7 @@
         function saveHighScore(time, lives) {
             const highScore = localStorage.getItem(localStorageKey);
             const currentDate = new Date().toLocaleDateString();
-            const currentScore = { time, lives, date: currentDate };
+            const currentScore = {time, lives, date: currentDate};
 
             if (!highScore) {
                 localStorage.setItem(localStorageKey, JSON.stringify(currentScore));
@@ -402,7 +474,7 @@
         function displayHighScore() {
             const highScore = localStorage.getItem(localStorageKey);
             if (highScore) {
-                const { time, lives, date } = JSON.parse(highScore);
+                const {time, lives, date} = JSON.parse(highScore);
                 let formattedLifes = '';
                 for (let i = 0; i < lives; i++) {
                     formattedLifes += '❤️';
@@ -417,7 +489,7 @@
             let streak = 1;
 
             if (streakData) {
-                const { lastPlayed, currentStreak } = JSON.parse(streakData);
+                const {lastPlayed, currentStreak} = JSON.parse(streakData);
                 const lastPlayedDate = convertToDate(lastPlayed);
                 const todayDate = convertToDate(today);
 
@@ -430,14 +502,14 @@
                 }
             }
 
-            localStorage.setItem(streakKey, JSON.stringify({ lastPlayed: today, currentStreak: streak }));
+            localStorage.setItem(streakKey, JSON.stringify({lastPlayed: today, currentStreak: streak}));
             return streak;
         }
 
         function displayDailyStreak() {
             const streakData = localStorage.getItem(streakKey);
             if (streakData) {
-                const { currentStreak } = JSON.parse(streakData);
+                const {currentStreak} = JSON.parse(streakData);
                 document.getElementById('dailyStreak').innerText = `🔥 ${currentStreak} days`;
             } else {
                 document.getElementById('dailyStreak').innerText = `🔥 0 days`;
@@ -456,6 +528,7 @@
     <div id="level"></div>
     <div id="bar"></div>
     <div id="dailyStreak"></div>
+    <button data-theme-toggle>🌙</button>
 </header>
 <main>
     <div id="game" style="display: none;">
@@ -480,5 +553,7 @@
     <div id="life"></div>
     <div id="counter"></div>
 </footer>
+
+<script type="text/javascript" src="assets/script/darkmode.js" async></script>
 </body>
 </html>
