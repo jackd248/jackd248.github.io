@@ -418,9 +418,10 @@
 
             if (streakData) {
                 const { lastPlayed, currentStreak } = JSON.parse(streakData);
-                const lastPlayedDate = new Date(lastPlayed);
-                const diffTime = Math.abs(new Date(today) - lastPlayedDate);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const lastPlayedDate = convertToDate(lastPlayed);
+                const todayDate = convertToDate(today);
+
+                const diffDays = todayDate.getDate() - lastPlayedDate.getDate();
 
                 if (diffDays === 1) {
                     streak = currentStreak + 1;
@@ -441,6 +442,11 @@
             } else {
                 document.getElementById('dailyStreak').innerText = `🔥 0 days`;
             }
+        }
+
+        function convertToDate(dateString) {
+            let d = dateString.split(".");
+            return new Date(d[2] + '/' + d[1] + '/' + d[0]);
         }
 
     </script>
