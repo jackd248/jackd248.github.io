@@ -6,6 +6,11 @@ setInterval(() => {
     updateTime();
 }, 60000);
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
 document.getElementById("preview-reload").addEventListener("click", function(event) {
     updateTime();
 

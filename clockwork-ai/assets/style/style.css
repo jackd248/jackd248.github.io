@@ -134,13 +134,14 @@ a:hover {
 
 .standalone {
     height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .standalone .wrapper {
      display: flex;
      align-items: center;
      justify-content: center;
-     height: 100vh;
 }
 
 .standalone footer {
@@ -235,6 +236,17 @@ a:hover {
     section .preview-wrapper {
         margin-left: 50%;
         transform: translateX(-50%);
+    }
+    .standalone-poem {
+        max-width: 90vw;
+        box-sizing: border-box;
+        font-size: 36px;
+    }
+    .standalone-reload {
+        bottom: 40px;
+    }
+    footer {
+        max-height: 2em;
     }
 }
 
