@@ -232,7 +232,7 @@ a:hover {
 }
 
 @media screen and (max-width: 1200px) {
-    section .wrapper {
+    section .preview-wrapper {
         margin-left: 50%;
         transform: translateX(-50%);
     }
