@@ -135,11 +135,11 @@ button[data-theme-toggle] {
 }
 
 body.flash-green {
-    animation: flashGreenWhiteBlack .25s ease-in-out;
+    animation: flashGreenWhite .25s ease-in-out;
 }
 
 body.flash-red {
-    animation: flashRedBlack .25s ease-in-out;
+    animation: flashRedWhite .25s ease-in-out;
 }
 
 @keyframes flashGreenWhite {
@@ -191,7 +191,7 @@ body.flash-red {
 
 /* Dark mode styles */
 html[data-theme="dark"] body.flash-green {
-    animation: flashGreenWhiteBlack .25s ease-in-out;
+    animation: flashGreenBlack .25s ease-in-out;
 }
 
 html[data-theme="dark"] body.flash-red {
