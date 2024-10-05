@@ -41,6 +41,16 @@
             }
         });
 
+        document.addEventListener("touchend", function(event) {
+            event.preventDefault();
+            const clickEvent = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            event.target.dispatchEvent(clickEvent);
+        })
+
         function generateRandomCalculation() {
             counter++;
             changeLevel(Math.floor(counter / 10) + 1);
@@ -326,7 +336,7 @@
 </main>
 <footer>
     <button id="start" onclick="start()">🚀 Start</button>
-    <button id="verifyResultButton" style="display: none;" onclick="verifyResult()">🧮 Submit</button>
+    <button id="verifyResultButton" style="display: none;" onclick="verifyResult()">✅ Submit</button>
     <button id="newCalculationButton" onclick="generateRandomCalculation()" style="display: none;">🆕 Next</button>
     <div id="life"></div>
     <div id="counter"></div>
