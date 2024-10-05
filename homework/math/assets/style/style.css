@@ -118,6 +118,7 @@ footer button {
 
 #highScore {
     font-size: 2vh;
+    line-height: 1.5;
     color: #666;
     margin-top: 1em;
     padding: 2em;
@@ -135,6 +136,10 @@ footer button {
     left: 1em;
     font-size: 1em;
     color: #666;
+}
+
+#dailyStreak span {
+    font-size: .75em;
 }
 
 button[data-theme-toggle] {
