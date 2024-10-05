@@ -49,6 +49,12 @@ button:hover, button.active {
     color: #666;
 }
 
+#result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #resultTime {
     font-size: 3vh;
 }
@@ -83,8 +89,9 @@ footer button {
     max-width: 100%;
 }
 
-#counter div {
+#counterCount {
     margin-top: 1em;
+    opacity: .5;
 }
 
 #life {
@@ -101,14 +108,24 @@ footer button {
     font-size: 6px;
 }
 
-#intro img {
+#intro {
     max-width: 25%;
+}
+
+#intro img {
+    width: 100%;
 }
 
 #highScore {
     font-size: 2vh;
     color: #666;
     margin-top: 1em;
+    padding: 2em;
+    max-width: 100px;
+}
+
+#highScore strong {
+    text-decoration: underline;
 }
 
 #dailyStreak {
@@ -124,6 +141,40 @@ button[data-theme-toggle] {
     position: absolute;
     top: 1em;
     right: 1em;
+}
+
+.mathTeacher[title]{
+    position: relative;
+}
+.mathTeacher[title]:before {
+    position: absolute;
+    right: 0;
+    top: -60px;
+    background-color: #333;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px;
+    padding: 10px 15px;
+    content: attr(title);
+    white-space: nowrap;
+    display: none;
+    font-size: 16px;
+}
+.mathTeacher[title]:after {
+    position: absolute;
+    left: 15px;
+    top: -10px;
+    border-top: 7px solid #333;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    display: none;
+    font-size: 1em;
+}
+.mathTeacher[title]:hover:after,
+.mathTeacher[title]:hover:before {
+    display: block;
 }
 
 @media (max-width: 768px) {

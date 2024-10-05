@@ -6,9 +6,9 @@
           content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0,user-scalable=0">
     <title>Math Game</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/media/math-game-full.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/media/math-game.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/media/math-game.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/media/math-teacher-logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/media/math-teacher-logo-small.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/media/math-teacher-logo-small.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Warang+Citi&family=Roboto:wght@400;700&display=swap"
@@ -26,6 +26,13 @@
         const localStorageKey = 'mathGame';
         const streakKey = 'dailyStreak';
         let previousCalculations = [];
+        const tooltips = [
+            "Keep going!",
+            "You're doing great!",
+            "Math is fun!",
+            "Stay focused!",
+            "Almost there!"
+        ];
 
 
         document.addEventListener("DOMContentLoaded", function (event) {
@@ -33,6 +40,14 @@
             document.documentElement.style.setProperty('--vh', `${vh}px`);
 
             displayHighScore();
+
+            document.querySelectorAll('.mathTeacher').forEach(function (element) {
+                console.log('Math Teacher e');
+                element.addEventListener('click', function () {
+                    console.log('Math Teacher clicked');
+                    this.setAttribute('title', tooltips[Math.floor(Math.random() * tooltips.length)]);
+                });
+            });
         });
 
         document.addEventListener("keyup", function (event) {
@@ -41,7 +56,7 @@
             }
         });
 
-        document.addEventListener("touchend", function(event) {
+        document.addEventListener("touchend", function (event) {
             event.preventDefault();
             const clickEvent = new MouseEvent('click', {
                 bubbles: true,
@@ -49,7 +64,7 @@
                 view: window
             });
             event.target.dispatchEvent(clickEvent);
-        })
+        });
 
         function generateRandomCalculation() {
             counter++;
@@ -58,7 +73,7 @@
             document.getElementById('calculationResult').style.color = '#666';
             document.getElementById('resultInput').style.borderColor = '#666';
             document.getElementById('resultInput').value = '';
-            document.getElementById('counter').querySelector('div').innerText = counter;
+            document.getElementById('counterCount').innerText = counter;
 
 
             let calculation = '';
@@ -205,7 +220,7 @@
             document.getElementById('resultTime').innerText = formattedTime;
             document.getElementById(`level`).innerText = '';
             document.getElementById(`bar`).innerText = '';
-            document.getElementById('counter').querySelector('div').innerText = counter;
+            document.getElementById('counterCount').innerText = counter;
             displayHighScore();
         }
 
@@ -222,7 +237,7 @@
             document.getElementById('resultTime').innerText = formattedTime;
             document.getElementById(`level`).innerText = '';
             document.getElementById(`bar`).innerText = '';
-            document.getElementById('counter').querySelector('div').innerText = counter;
+            document.getElementById('counterCount').innerText = counter;
         }
 
         function formatElapsedTime(seconds) {
@@ -335,8 +350,8 @@
         </div>
     </div>
     <div id="result">
-        <div id="intro">
-            <img src="assets/media/math-teacher.png" alt="Math Teacher" />
+        <div id="intro" class="mathTeacher" >
+            <img src="assets/media/math-teacher.png" alt="Math Teacher"/>
         </div>
         <div id="resultEmoji"></div>
         <div id="resultTime">Math Game</div>
@@ -349,8 +364,10 @@
     <button id="newCalculationButton" onclick="generateRandomCalculation()" style="display: none;">🆕 Next</button>
     <div id="life"></div>
     <div id="counter">
-        <img src="assets/media/math-teacher.png" alt="Math Teacher" />
-        <div>0</div>
+        <div class="mathTeacher">
+            <img src="assets/media/math-teacher.png" alt="Math Teacher"/>
+        </div>
+        <div id="counterCount">0</div>
     </div>
 </footer>
 
