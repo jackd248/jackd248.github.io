@@ -140,6 +140,8 @@ footer button {
 
 #dailyStreak span {
     font-size: .75em;
+    display: block;
+    margin-top: 1em;
 }
 
 button[data-theme-toggle] {
@@ -182,7 +184,7 @@ button[data-theme-toggle] {
     display: block;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     main, #game, #resultInput {
         font-size: 10vh;
     }
@@ -201,6 +203,12 @@ button[data-theme-toggle] {
 
     button[data-theme-toggle] {
         padding: .375em;
+    }
+
+    #dailyStreak span {
+        display: inline;
+        margin-left: 1em;
+        margin-top: 0;
     }
 }
 

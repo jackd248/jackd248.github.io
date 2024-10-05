@@ -251,8 +251,8 @@
                 return `${seconds.toFixed(2)} s`;
             } else {
                 const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = Math.floor((seconds % 60));
-                return `${minutes}:${remainingSeconds}min`;
+                const remainingSeconds = Math.floor((seconds % 60)).toString().padStart(2, '0');
+                return `${minutes}:${remainingSeconds} min`;
             }
         }
 
@@ -329,7 +329,7 @@
                 let html = `🔥 ${currentStreak} days`;
                 if (timeSpentToday) {
                     const formattedTime = formatElapsedTime(timeSpentToday);
-                    html += `<br/><span>⏱️ ${formattedTime}</span>`;
+                    html += `<span>⏱️ ${formattedTime}</span>`;
                 }
                 document.getElementById('dailyStreak').innerHTML = `${html}`;
             } else {
