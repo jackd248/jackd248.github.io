@@ -58,7 +58,7 @@
             document.getElementById('calculationResult').style.color = '#666';
             document.getElementById('resultInput').style.borderColor = '#666';
             document.getElementById('resultInput').value = '';
-            document.getElementById('counter').innerText = counter;
+            document.getElementById('counter').querySelector('div').innerText = counter;
 
 
             let calculation = '';
@@ -138,6 +138,10 @@
         }
 
         function changeLevel(newLevel) {
+            if (newLevel > 3) {
+                newLevel = 3;
+            }
+
             level = newLevel;
             document.getElementById(`level`).innerText = `Level ${level}`;
         }
@@ -175,6 +179,8 @@
             changeLevel(1);
             document.getElementById('game').style.display = 'flex';
             document.getElementById('start').style.display = 'none';
+            document.getElementById('intro').style.display = 'none';
+            document.getElementById('counter').style.display = 'block';
             document.getElementById(`resultEmoji`).innerText = '';
             document.getElementById(`resultTime`).innerText = '';
             document.getElementById('highScore').innerHTML = '';
@@ -199,7 +205,7 @@
             document.getElementById('resultTime').innerText = formattedTime;
             document.getElementById(`level`).innerText = '';
             document.getElementById(`bar`).innerText = '';
-            document.getElementById('counter').innerText = counter;
+            document.getElementById('counter').querySelector('div').innerText = counter;
             displayHighScore();
         }
 
@@ -216,7 +222,7 @@
             document.getElementById('resultTime').innerText = formattedTime;
             document.getElementById(`level`).innerText = '';
             document.getElementById(`bar`).innerText = '';
-            document.getElementById('counter').innerText = counter;
+            document.getElementById('counter').querySelector('div').innerText = counter;
         }
 
         function formatElapsedTime(seconds) {
@@ -329,7 +335,10 @@
         </div>
     </div>
     <div id="result">
-        <div id="resultEmoji">🧮</div>
+        <div id="intro">
+            <img src="assets/media/math-teacher.png" alt="Math Teacher" />
+        </div>
+        <div id="resultEmoji"></div>
         <div id="resultTime">Math Game</div>
         <div id="highScore"></div>
     </div>
@@ -339,7 +348,10 @@
     <button id="verifyResultButton" style="display: none;" onclick="verifyResult()">✅ Submit</button>
     <button id="newCalculationButton" onclick="generateRandomCalculation()" style="display: none;">🆕 Next</button>
     <div id="life"></div>
-    <div id="counter"></div>
+    <div id="counter">
+        <img src="assets/media/math-teacher.png" alt="Math Teacher" />
+        <div>0</div>
+    </div>
 </footer>
 
 <script type="text/javascript" src="assets/script/darkmode.js" async></script>

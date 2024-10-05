@@ -69,12 +69,22 @@ footer button {
 }
 
 #counter {
-    display: block;
+    display: none;
     position: absolute;
     bottom: 1em;
     right: 1em;
     font-size: .75em;
     color: #666;
+    width: 40px;
+    text-align: right;
+}
+
+#counter img {
+    max-width: 100%;
+}
+
+#counter div {
+    margin-top: 1em;
 }
 
 #life {
@@ -88,7 +98,11 @@ footer button {
 
 #bar {
     margin-top: 5px;
-    font-size: 9px;
+    font-size: 6px;
+}
+
+#intro img {
+    max-width: 25%;
 }
 
 #highScore {
