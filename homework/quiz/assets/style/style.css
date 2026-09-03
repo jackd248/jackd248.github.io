@@ -47,7 +47,7 @@ header {
 /* #game/#results also carry an ID `display: flex` rule further down, which
    would otherwise outrank the UA [hidden] rule. This selector is more
    specific than a bare ID, so hidden always wins regardless of source order. */
-#intro[hidden], #game[hidden], #results[hidden], #dailyStreak[hidden] {
+#intro[hidden], #game[hidden], #results[hidden], #dailyStreak[hidden], #answerForm[hidden] {
     display: none;
 }
 
@@ -310,8 +310,10 @@ html[data-theme="dark"] #feedback.wrong {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1em;
-    font-size: 1em;
+    gap: 1em 1.5em;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     color: #666;
 }
 
@@ -319,7 +321,22 @@ html[data-theme="dark"] #infoFacts {
     color: #ccc;
 }
 
-#infoFacts dt {
+.fact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 5em;
+}
+
+.fact-label {
+    font-size: .75em;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    opacity: .7;
+}
+
+.fact-value {
+    font-size: 1.1em;
     font-weight: 700;
 }
 

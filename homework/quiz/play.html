@@ -40,7 +40,7 @@
 
         <section id="infoCard" hidden aria-labelledby="infoTitle">
             <h2 id="infoTitle"></h2>
-            <dl id="infoFacts"></dl>
+            <ul id="infoFacts"></ul>
             <p id="infoFootnote" hidden></p>
             <div id="infoMap" role="img"></div>
             <button type="button" id="nextButton">➡️ Weiter</button>
@@ -218,37 +218,38 @@
         infoMap.setAttribute('aria-label', `Karte: ${item.name} hervorgehoben`);
     }
 
+    function addFact(label, value) {
+        const li = document.createElement('li');
+        li.className = 'fact';
+        const dt = document.createElement('span');
+        dt.className = 'fact-label';
+        dt.textContent = label;
+        const dd = document.createElement('span');
+        dd.className = 'fact-value';
+        dd.textContent = value;
+        li.append(dt, dd);
+        infoFacts.append(li);
+    }
+
     function renderInfoCard(item) {
         infoTitle.textContent = `${item.name} · ${item.capital}`;
 
         infoFacts.innerHTML = '';
         const group = set.groups.find((g) => g.id === item.group);
         if (group) {
-            const dt = document.createElement('dt');
-            dt.textContent = 'Region';
-            const dd = document.createElement('dd');
-            dd.textContent = group.label;
-            infoFacts.append(dt, dd);
+            addFact('Region', group.label);
         }
         for (const fact of set.facts) {
             const value = item.facts[fact.key];
             if (value === undefined) {
                 continue;
             }
-            const dt = document.createElement('dt');
-            dt.textContent = fact.label;
-            const dd = document.createElement('dd');
-            dd.textContent = `${formatNumber(value)} ${fact.unit}`;
-            infoFacts.append(dt, dd);
+            addFact(fact.label, `${formatNumber(value)} ${fact.unit}`);
         }
 
         const densityFact = set.facts.find((fact) => fact.key === 'densitySheet');
         if (referenceItem && densityFact && item.facts[densityFact.key] !== undefined) {
-            const dt = document.createElement('dt');
-            dt.textContent = `Dichte ${referenceItem.name}`;
-            const dd = document.createElement('dd');
-            dd.textContent = `${formatNumber(referenceItem.facts[densityFact.key])} ${densityFact.unit}`;
-            infoFacts.append(dt, dd);
+            addFact(`Dichte ${referenceItem.name}`, `${formatNumber(referenceItem.facts[densityFact.key])} ${densityFact.unit}`);
         }
 
         const footnote = FOOTNOTES[item.id];
@@ -257,11 +258,13 @@
 
         renderQuestionMap(item);
         infoCard.hidden = false;
+        answerForm.hidden = true;
     }
 
     function renderQuestion(question) {
         questionModeLabel.textContent = question.mode.label;
         promptEl.textContent = question.promptText;
+        answerForm.hidden = false;
         answerInput.value = '';
         answerInput.classList.remove('correct', 'wrong');
         feedbackEl.textContent = '';
