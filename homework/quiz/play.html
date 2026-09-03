@@ -132,6 +132,7 @@
     let roundStartTime = 0;
     let pausedMs = 0;
     let infoShownAt = 0;
+    let answerHistory = [];
 
     function formatNumber(value) {
         return value.toLocaleString('de-DE');
@@ -150,8 +151,12 @@
         lifeEl.innerHTML = '❤️'.repeat(life) + '🖤'.repeat(3 - life);
     }
 
-    function renderProgress(index, total) {
-        progressEl.textContent = '✅'.repeat(index) + '⬜'.repeat(total - index);
+    function renderProgress(total) {
+        const cells = answerHistory.map((correct) => (correct ? '✅' : '❌'));
+        while (cells.length < total) {
+            cells.push('⬜');
+        }
+        progressEl.textContent = cells.join('');
     }
 
     function comboEmoji(streak) {
@@ -270,7 +275,7 @@
         feedbackEl.textContent = '';
         feedbackEl.classList.remove('almost', 'wrong');
         infoCard.hidden = true;
-        renderProgress(question.index, question.total);
+        renderProgress(question.total);
         answerInput.focus();
     }
 
@@ -283,6 +288,7 @@
         const question = engine.startRound();
         roundStartTime = Date.now();
         pausedMs = 0;
+        answerHistory = [];
         introEl.hidden = true;
         resultsEl.hidden = true;
         gameEl.hidden = false;
@@ -341,6 +347,7 @@
         renderLife(result.life);
         renderCombo(result.streak, result.milestone);
         recordItemResult(set.id, question.item.id, result.status !== 'wrong');
+        answerHistory.push(result.status !== 'wrong');
 
         if (result.status === 'wrong') {
             flash('flash-red');
