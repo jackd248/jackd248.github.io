@@ -31,12 +31,20 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* fallback for browsers without dvh */
-    height: 100dvh;
+    /* min-height, not height: the info card after a wrong answer (title,
+       facts, map, "Weiter") is taller than a phone viewport, and a fixed
+       height combined with justify-content: center pushed the button off
+       the bottom edge with no way to reach it. With min-height the body
+       grows instead, so centring only applies while there is room. */
+    min-height: 100vh; /* fallback for browsers without dvh */
+    min-height: 100dvh;
     box-sizing: border-box;
     padding: 2em;
     margin: 0;
-    touch-action: none;
+    /* pan-y, not none: `none` also suppressed scrolling, which is what
+       trapped the info card. pan-y keeps the pinch and double-tap
+       suppression this rule was here for. */
+    touch-action: pan-y;
 }
 
 header {
@@ -353,6 +361,12 @@ html[data-theme="dark"] #infoFacts {
 #infoMap svg, #masteryMap svg {
     width: 100%;
     height: auto;
+    /* Africa's viewBox is nearly square, so at 22em wide the map alone
+       claimed about 350px and pushed "Weiter" past the fold on a phone.
+       Capping the height letterboxes the drawing inside its box (the
+       default preserveAspectRatio centres it) so the button stays in
+       view without needing the scroll that now exists as a fallback. */
+    max-height: 45dvh;
 }
 
 .country {
