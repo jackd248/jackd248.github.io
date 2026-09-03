@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <title>Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Warang+Citi&family=Roboto:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/style.css">
+</head>
+<body>
+<header>
+    <button type="button" data-theme-toggle aria-label="Farbschema umschalten">🌙</button>
+</header>
+<main>
+    <h1 id="setTitle"></h1>
+    <p>Wähle einen Modus:</p>
+    <ul id="modes"></ul>
+</main>
+
+<script type="text/javascript" src="assets/script/darkmode.js" async></script>
+<script type="module">
+    import {getRoundProgress} from './assets/script/progress.js';
+
+    const set = await fetch('assets/data/africa.json').then((r) => r.json());
+    document.title = set.title;
+    document.getElementById('setTitle').textContent = `${set.icon} ${set.title}`;
+
+    const modes = [...set.modes, {id: 'mixed', label: 'Gemischt'}];
+    const list = document.getElementById('modes');
+
+    for (const mode of modes) {
+        const {highscore} = getRoundProgress(set.id, mode.id);
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.className = 'button';
+        link.href = `play.html?mode=${mode.id}`;
+        link.textContent = highscore
+            ? `${mode.label} — 🥇 ${'❤️'.repeat(highscore.lives)} · ${highscore.time.toFixed(1)} s`
+            : mode.label;
+        li.appendChild(link);
+        list.appendChild(li);
+    }
+</script>
+</body>
+</html>

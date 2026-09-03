@@ -1,0 +1,444 @@
+/* Base look copied from homework/math (KONZEPT-quiz-plattform.md §9): layout,
+   dark mode, flash animations, life/streak/highscore patterns. */
+
+:root {
+    --accent: #2a7f3f;
+    --accent-strong: #1c5c2c;
+    --country-fill: #ccc;
+    --country-stroke: white;
+    --context-fill: #eee;
+    --context-stroke: white;
+}
+
+html[data-theme="dark"] {
+    --accent: #4ac26a;
+    --accent-strong: #7fe098;
+    --country-fill: #444;
+    --country-stroke: black;
+    --context-fill: #222;
+    --context-stroke: black;
+}
+
+* {
+    font-family: "Noto Sans Warang Citi", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    touch-action: manipulation;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* fallback for browsers without dvh */
+    height: 100dvh;
+    box-sizing: border-box;
+    padding: 2em;
+    margin: 0;
+    touch-action: none;
+}
+
+header {
+    text-align: center;
+    width: 100%;
+}
+
+/* #game/#results also carry an ID `display: flex` rule further down, which
+   would otherwise outrank the UA [hidden] rule. This selector is more
+   specific than a bare ID, so hidden always wins regardless of source order. */
+#intro[hidden], #game[hidden], #results[hidden], #dailyStreak[hidden] {
+    display: none;
+}
+
+main, #game {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+button, .button {
+    padding: 1em;
+    font-size: 2vh;
+    border: none;
+    background-color: #eee;
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+button:hover, button.active, .button:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+footer button {
+    font-size: 5vh;
+}
+
+#life {
+    display: block;
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    font-size: 1.5em;
+    color: #666;
+}
+
+#dailyStreak {
+    display: block;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    font-size: 1em;
+    color: #666;
+}
+
+#dailyStreak span {
+    font-size: .75em;
+    display: block;
+    margin-top: 1em;
+}
+
+#highScore {
+    font-size: 2vh;
+    line-height: 1.5;
+    color: #666;
+    margin-top: 1em;
+    padding: 2em;
+}
+
+#highScore strong {
+    text-decoration: underline;
+}
+
+button[data-theme-toggle] {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+
+body.flash-green {
+    animation: flashGreenWhite .25s ease-in-out;
+}
+
+body.flash-red {
+    animation: flashRedWhite .25s ease-in-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes flashGreenWhite {
+        0% { background-color: white; }
+        5% { background-color: green; }
+        100% { background-color: white; }
+    }
+
+    @keyframes flashRedWhite {
+        0% { background-color: white; }
+        5% { background-color: red; }
+        100% { background-color: white; }
+    }
+
+    @keyframes flashGreenBlack {
+        0% { background-color: black; }
+        5% { background-color: green; }
+        100% { background-color: black; }
+    }
+
+    @keyframes flashRedBlack {
+        0% { background-color: black; }
+        5% { background-color: red; }
+        100% { background-color: black; }
+    }
+
+    html[data-theme="dark"] body.flash-green {
+        animation: flashGreenBlack .25s ease-in-out;
+    }
+
+    html[data-theme="dark"] body.flash-red {
+        animation: flashRedBlack .25s ease-in-out;
+    }
+}
+
+html[data-theme="dark"] body {
+    background-color: black;
+    color: white;
+}
+
+html[data-theme="dark"] button, html[data-theme="dark"] .button {
+    background-color: #333;
+    color: white;
+}
+
+html[data-theme="dark"] button:hover, html[data-theme="dark"] button.active,
+html[data-theme="dark"] .button:hover {
+    background-color: #444;
+}
+
+html[data-theme="dark"] #life, html[data-theme="dark"] #highScore, html[data-theme="dark"] #dailyStreak {
+    color: #ccc;
+}
+
+/* --- quiz-specific additions --- */
+
+#intro img {
+    max-width: 40vh;
+}
+
+#modeLabel {
+    font-size: 1.5vh;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+html[data-theme="dark"] #modeLabel {
+    color: #ccc;
+}
+
+#progress {
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    margin-bottom: .5em;
+}
+
+#comboDisplay {
+    font-size: 1.5em;
+    min-height: 1.5em;
+}
+
+#comboDisplay.milestone {
+    animation: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    #comboDisplay.milestone {
+        animation: comboPulse .4s ease-in-out;
+    }
+
+    @keyframes comboPulse {
+        0% { transform: scale(1); }
+        40% { transform: scale(1.4); }
+        100% { transform: scale(1); }
+    }
+}
+
+#prompt {
+    font-size: clamp(1.75rem, 7vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: .5em;
+    max-width: 90vw;
+}
+
+#answerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5em;
+    width: 100%;
+}
+
+#answerForm label {
+    font-size: 1.2vh;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+html[data-theme="dark"] #answerForm label {
+    color: #ccc;
+}
+
+#answerInput {
+    font-size: max(16px, 4vh);
+    text-align: center;
+    border: 0;
+    border-bottom: 2px solid #666;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    width: min(90vw, 20em);
+    padding: .2em;
+}
+
+#answerInput.correct {
+    border-color: var(--accent);
+}
+
+#answerInput.wrong {
+    border-color: #c0392b;
+}
+
+#feedback {
+    min-height: 1.5em;
+    font-size: 1.1em;
+}
+
+#feedback.almost {
+    color: #b8860b;
+}
+
+#feedback.wrong {
+    color: #c0392b;
+}
+
+html[data-theme="dark"] #feedback.almost {
+    color: #e0c34a;
+}
+
+html[data-theme="dark"] #feedback.wrong {
+    color: #e0736a;
+}
+
+#infoCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .75em;
+    max-width: 90vw;
+}
+
+#infoCard[hidden] {
+    display: none;
+}
+
+#infoFacts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    font-size: 1em;
+    color: #666;
+}
+
+html[data-theme="dark"] #infoFacts {
+    color: #ccc;
+}
+
+#infoFacts dt {
+    font-weight: 700;
+}
+
+#infoFootnote {
+    font-size: .85em;
+    color: #888;
+    max-width: 32em;
+}
+
+#infoMap, #masteryMap {
+    width: min(80vw, 22em);
+}
+
+#infoMap svg, #masteryMap svg {
+    width: 100%;
+    height: auto;
+}
+
+.country {
+    fill: var(--country-fill);
+    stroke: var(--country-stroke);
+    stroke-width: .3;
+}
+
+/* Countries outside the quiz set (§8: keeps the continent looking whole
+   instead of patchy). Never highlighted or colored by mastery. */
+.country.context {
+    fill: var(--context-fill);
+    stroke: var(--context-stroke);
+    stroke-width: .3;
+}
+
+.country.active {
+    fill: var(--accent);
+    stroke: var(--accent-strong);
+    stroke-width: 1;
+}
+
+.country.mastery-light {
+    fill: #8fbf9f;
+    fill: color-mix(in srgb, var(--accent) 40%, #ccc);
+}
+
+.country.mastery-strong {
+    fill: var(--accent);
+}
+
+.capital-dot {
+    fill: var(--accent-strong);
+    stroke: white;
+    stroke-width: .5;
+}
+
+.capital-dot.ring {
+    fill: none;
+    stroke: var(--accent-strong);
+    stroke-width: 1;
+}
+
+#results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5em;
+}
+
+#results[hidden] {
+    display: none;
+}
+
+#resultTime {
+    font-size: 3vh;
+}
+
+#resultDelta {
+    font-size: 1.5vh;
+    color: #666;
+}
+
+html[data-theme="dark"] #resultDelta {
+    color: #ccc;
+}
+
+@media (max-width: 1024px) {
+    #life {
+        font-size: 2vh;
+    }
+
+    footer button {
+        font-size: 3vh;
+    }
+
+    body {
+        padding: 1.5em 1em;
+    }
+
+    button[data-theme-toggle] {
+        padding: .375em;
+    }
+
+    #dailyStreak span {
+        display: inline;
+        margin-left: 1em;
+        margin-top: 0;
+    }
+}
+
+/* --- mode selection (index.html) --- */
+
+#modes {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    list-style: none;
+    padding: 0;
+    margin: 1em 0;
+    width: min(90vw, 24em);
+}
+
+#modes .button {
+    padding: 1em 1.5em;
+}

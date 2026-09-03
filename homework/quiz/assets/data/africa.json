@@ -1,0 +1,696 @@
+{
+	"schemaVersion": "1.0",
+	"id": "africa",
+	"title": "Afrika – Staaten & Hauptstädte",
+	"icon": "🌍",
+	"language": "de",
+	"source": "Arbeitsblatt „Ausgewählte Staaten Afrikas“ — Einwohner und Dichte überwiegend Stand ~2018, einzelne Zeilen später aktualisiert (Dichte dort nicht nachgerechnet). Werte bewusst unverändert übernommen.",
+	"modes": [
+		{
+			"id": "capital",
+			"label": "Land → Hauptstadt",
+			"prompt": "name",
+			"answer": "capital"
+		},
+		{
+			"id": "country",
+			"label": "Hauptstadt → Land",
+			"prompt": "capital",
+			"answer": "name"
+		}
+	],
+	"groups": [
+		{
+			"id": "north",
+			"label": "überwiegend Nordafrika"
+		},
+		{
+			"id": "west",
+			"label": "überwiegend Westafrika"
+		},
+		{
+			"id": "central",
+			"label": "überwiegend Zentralafrika"
+		},
+		{
+			"id": "east",
+			"label": "überwiegend Ostafrika"
+		},
+		{
+			"id": "south",
+			"label": "überwiegend Südafrika"
+		},
+		{
+			"id": "reference",
+			"label": "Referenz"
+		}
+	],
+	"facts": [
+		{
+			"key": "areaKm2",
+			"label": "Fläche",
+			"unit": "km²"
+		},
+		{
+			"key": "populationMio",
+			"label": "Einwohner",
+			"unit": "Mio"
+		},
+		{
+			"key": "densitySheet",
+			"label": "Bev.dichte (Blatt)",
+			"unit": "E./km²"
+		}
+	],
+	"items": [
+		{
+			"id": "eg",
+			"group": "north",
+			"name": "Ägypten",
+			"capital": "Kairo",
+			"facts": {
+				"areaKm2": 1002000,
+				"populationMio": 120.1,
+				"densitySheet": 97
+			},
+			"coords": {
+				"capital": [
+					30.0626,
+					31.2497
+				]
+			}
+		},
+		{
+			"id": "dz",
+			"group": "north",
+			"name": "Algerien",
+			"capital": "Algier",
+			"facts": {
+				"areaKm2": 2381741,
+				"populationMio": 41.3,
+				"densitySheet": 17
+			},
+			"coords": {
+				"capital": [
+					36.7323,
+					3.0875
+				]
+			}
+		},
+		{
+			"id": "ly",
+			"group": "north",
+			"name": "Libyen",
+			"capital": "Tripolis",
+			"facts": {
+				"areaKm2": 1775500,
+				"populationMio": 6.3,
+				"densitySheet": 4
+			},
+			"coords": {
+				"capital": [
+					32.8874,
+					13.1873
+				]
+			}
+		},
+		{
+			"id": "tn",
+			"group": "north",
+			"name": "Tunesien",
+			"capital": "Tunis",
+			"facts": {
+				"areaKm2": 163610,
+				"populationMio": 11.5,
+				"densitySheet": 70
+			},
+			"coords": {
+				"capital": [
+					36.819,
+					10.1658
+				]
+			}
+		},
+		{
+			"id": "ml",
+			"group": "west",
+			"name": "Mali",
+			"capital": "Bamako",
+			"facts": {
+				"areaKm2": 1240192,
+				"populationMio": 18.5,
+				"densitySheet": 15
+			},
+			"coords": {
+				"capital": [
+					12.6091,
+					-7.9752
+				]
+			}
+		},
+		{
+			"id": "mr",
+			"group": "west",
+			"name": "Mauretanien",
+			"capital": "Nouakchott",
+			"facts": {
+				"areaKm2": 1030700,
+				"populationMio": 4.4,
+				"densitySheet": 4
+			},
+			"coords": {
+				"capital": [
+					18.0858,
+					-15.9785
+				]
+			}
+		},
+		{
+			"id": "ne",
+			"group": "west",
+			"name": "Niger",
+			"capital": "Niamey",
+			"facts": {
+				"areaKm2": 1267000,
+				"populationMio": 21.4,
+				"densitySheet": 17
+			},
+			"coords": {
+				"capital": [
+					13.5137,
+					2.1098
+				]
+			}
+		},
+		{
+			"id": "sn",
+			"group": "west",
+			"name": "Senegal",
+			"capital": "Dakar",
+			"facts": {
+				"areaKm2": 196722,
+				"populationMio": 15.8,
+				"densitySheet": 81
+			},
+			"coords": {
+				"capital": [
+					14.6937,
+					-17.4441
+				]
+			}
+		},
+		{
+			"id": "ci",
+			"group": "west",
+			"name": "Côte d’Ivoire",
+			"capital": "Yamoussoukro",
+			"aliases": {
+				"name": [
+					"Elfenbeinküste",
+					"Cote d'Ivoire",
+					"Ivorenküste"
+				]
+			},
+			"facts": {
+				"areaKm2": 322463,
+				"populationMio": 24.3,
+				"densitySheet": 75
+			},
+			"coords": {
+				"capital": [
+					6.8205,
+					-5.2767
+				]
+			}
+		},
+		{
+			"id": "ng",
+			"group": "west",
+			"name": "Nigeria",
+			"capital": "Abuja",
+			"facts": {
+				"areaKm2": 923768,
+				"populationMio": 242.4,
+				"densitySheet": 207
+			},
+			"coords": {
+				"capital": [
+					9.0579,
+					7.4951
+				]
+			}
+		},
+		{
+			"id": "td",
+			"group": "central",
+			"name": "Tschad",
+			"capital": "N’Djamena",
+			"aliases": {
+				"capital": [
+					"Ndjamena",
+					"N'Djamena"
+				]
+			},
+			"facts": {
+				"areaKm2": 1284000,
+				"populationMio": 14.9,
+				"densitySheet": 12
+			},
+			"coords": {
+				"capital": [
+					12.1067,
+					15.0444
+				]
+			}
+		},
+		{
+			"id": "cm",
+			"group": "central",
+			"name": "Kamerun",
+			"capital": "Jaunde",
+			"aliases": {
+				"capital": [
+					"Yaoundé",
+					"Yaounde"
+				]
+			},
+			"facts": {
+				"areaKm2": 475442,
+				"populationMio": 24.0,
+				"densitySheet": 51
+			},
+			"coords": {
+				"capital": [
+					3.8667,
+					11.5167
+				]
+			}
+		},
+		{
+			"id": "cg",
+			"group": "central",
+			"name": "Republik Kongo",
+			"capital": "Brazzaville",
+			"aliases": {
+				"name": [
+					"Kongo (Brazzaville)",
+					"Kongo-Brazzaville"
+				]
+			},
+			"facts": {
+				"areaKm2": 342000,
+				"populationMio": 5.3,
+				"densitySheet": 15
+			},
+			"coords": {
+				"capital": [
+					-4.2661,
+					15.2832
+				]
+			}
+		},
+		{
+			"id": "cd",
+			"group": "central",
+			"name": "Dem. Rep. Kongo",
+			"capital": "Kinshasa",
+			"aliases": {
+				"name": [
+					"DR Kongo",
+					"Demokratische Republik Kongo",
+					"Kongo (Kinshasa)"
+				]
+			},
+			"facts": {
+				"areaKm2": 2344858,
+				"populationMio": 116.5,
+				"densitySheet": 35
+			},
+			"coords": {
+				"capital": [
+					-4.3276,
+					15.3136
+				]
+			}
+		},
+		{
+			"id": "cf",
+			"group": "central",
+			"name": "Zentralafrikanische Rep.",
+			"capital": "Bangui",
+			"aliases": {
+				"name": [
+					"Zentralafrikanische Republik",
+					"ZAR"
+				]
+			},
+			"facts": {
+				"areaKm2": 622984,
+				"populationMio": 4.6,
+				"densitySheet": 7
+			},
+			"coords": {
+				"capital": [
+					4.3612,
+					18.555
+				]
+			}
+		},
+		{
+			"id": "rw",
+			"group": "east",
+			"name": "Ruanda",
+			"capital": "Kigali",
+			"facts": {
+				"areaKm2": 26338,
+				"populationMio": 12.2,
+				"densitySheet": 566
+			},
+			"coords": {
+				"capital": [
+					-1.95,
+					30.0588
+				]
+			}
+		},
+		{
+			"id": "et",
+			"group": "east",
+			"name": "Äthiopien",
+			"capital": "Addis Abeba",
+			"aliases": {
+				"capital": [
+					"Addis Ababa"
+				]
+			},
+			"facts": {
+				"areaKm2": 1104300,
+				"populationMio": 138.9,
+				"densitySheet": 95
+			},
+			"coords": {
+				"capital": [
+					9.025,
+					38.7469
+				]
+			}
+		},
+		{
+			"id": "ke",
+			"group": "east",
+			"name": "Kenia",
+			"capital": "Nairobi",
+			"facts": {
+				"areaKm2": 591971,
+				"populationMio": 49.7,
+				"densitySheet": 84
+			},
+			"coords": {
+				"capital": [
+					-1.2833,
+					36.8167
+				]
+			}
+		},
+		{
+			"id": "mg",
+			"group": "east",
+			"name": "Madagaskar",
+			"capital": "Antananarivo",
+			"facts": {
+				"areaKm2": 578041,
+				"populationMio": 25.5,
+				"densitySheet": 44
+			},
+			"coords": {
+				"capital": [
+					-18.9137,
+					47.5361
+				]
+			}
+		},
+		{
+			"id": "so",
+			"group": "east",
+			"name": "Somalia",
+			"capital": "Mogadischu",
+			"aliases": {
+				"capital": [
+					"Mogadishu"
+				]
+			},
+			"facts": {
+				"areaKm2": 637657,
+				"populationMio": 14.7,
+				"densitySheet": 23
+			},
+			"coords": {
+				"capital": [
+					2.0371,
+					45.3438
+				]
+			}
+		},
+		{
+			"id": "tz",
+			"group": "east",
+			"name": "Tansania",
+			"capital": "Dodoma",
+			"aliases": {
+				"capital": [
+					"Daressalam",
+					"Dar es Salaam"
+				]
+			},
+			"facts": {
+				"areaKm2": 947303,
+				"populationMio": 72.6,
+				"densitySheet": 60
+			},
+			"coords": {
+				"capital": [
+					-6.1722,
+					35.7395
+				]
+			}
+		},
+		{
+			"id": "sd",
+			"group": "east",
+			"name": "Sudan",
+			"capital": "Khartum",
+			"aliases": {
+				"capital": [
+					"Khartoum"
+				]
+			},
+			"facts": {
+				"areaKm2": 1840687,
+				"populationMio": 40.9,
+				"densitySheet": 22
+			},
+			"coords": {
+				"capital": [
+					15.5518,
+					32.5324
+				]
+			}
+		},
+		{
+			"id": "ss",
+			"group": "east",
+			"name": "Südsudan",
+			"capital": "Juba",
+			"facts": {
+				"areaKm2": 619745,
+				"populationMio": 12.5,
+				"densitySheet": 20
+			},
+			"coords": {
+				"capital": [
+					4.8517,
+					31.5825
+				]
+			}
+		},
+		{
+			"id": "mu",
+			"group": "east",
+			"name": "Mauritius",
+			"capital": "Port Louis",
+			"facts": {
+				"areaKm2": 2040,
+				"populationMio": 1.3,
+				"densitySheet": 624
+			},
+			"coords": {
+				"capital": [
+					-20.1619,
+					57.4989
+				]
+			}
+		},
+		{
+			"id": "bw",
+			"group": "south",
+			"name": "Botsuana",
+			"capital": "Gaborone",
+			"aliases": {
+				"name": [
+					"Botswana"
+				]
+			},
+			"facts": {
+				"areaKm2": 582000,
+				"populationMio": 2.3,
+				"densitySheet": 4
+			},
+			"coords": {
+				"capital": [
+					-24.6545,
+					25.9086
+				]
+			}
+		},
+		{
+			"id": "mz",
+			"group": "south",
+			"name": "Mosambik",
+			"capital": "Maputo",
+			"facts": {
+				"areaKm2": 799380,
+				"populationMio": 29.7,
+				"densitySheet": 37
+			},
+			"coords": {
+				"capital": [
+					-25.9655,
+					32.5832
+				]
+			}
+		},
+		{
+			"id": "na",
+			"group": "south",
+			"name": "Namibia",
+			"capital": "Windhuk",
+			"aliases": {
+				"capital": [
+					"Windhoek"
+				]
+			},
+			"facts": {
+				"areaKm2": 824290,
+				"populationMio": 2.5,
+				"densitySheet": 3
+			},
+			"coords": {
+				"capital": [
+					-22.5594,
+					17.0832
+				]
+			}
+		},
+		{
+			"id": "zm",
+			"group": "south",
+			"name": "Sambia",
+			"capital": "Lusaka",
+			"facts": {
+				"areaKm2": 752612,
+				"populationMio": 17.0,
+				"densitySheet": 23
+			},
+			"coords": {
+				"capital": [
+					-15.4067,
+					28.2871
+				]
+			}
+		},
+		{
+			"id": "zw",
+			"group": "south",
+			"name": "Simbabwe",
+			"capital": "Harare",
+			"facts": {
+				"areaKm2": 390757,
+				"populationMio": 16.5,
+				"densitySheet": 42
+			},
+			"coords": {
+				"capital": [
+					-17.8277,
+					31.0534
+				]
+			}
+		},
+		{
+			"id": "za",
+			"group": "south",
+			"name": "Südafrika",
+			"capital": "Pretoria",
+			"aliases": {
+				"capital": [
+					"Tshwane",
+					"Pretoria (Tshwane)"
+				]
+			},
+			"facts": {
+				"areaKm2": 1219602,
+				"populationMio": 64.4,
+				"densitySheet": 47
+			},
+			"coords": {
+				"capital": [
+					-25.7449,
+					28.1878
+				]
+			}
+		},
+		{
+			"id": "ao",
+			"group": "south",
+			"name": "Angola",
+			"capital": "Luanda",
+			"facts": {
+				"areaKm2": 1246700,
+				"populationMio": 29.7,
+				"densitySheet": 24
+			},
+			"coords": {
+				"capital": [
+					-8.8368,
+					13.2343
+				]
+			}
+		},
+		{
+			"id": "de",
+			"group": "reference",
+			"name": "Deutschland",
+			"capital": "Berlin",
+			"facts": {
+				"areaKm2": 357578,
+				"populationMio": 82.6,
+				"densitySheet": 231
+			},
+			"coords": {
+				"capital": [
+					52.5244,
+					13.4105
+				]
+			}
+		}
+	],
+	"map": {
+		"file": "africa.svg",
+		"pathIdPrefix": "c-",
+		"projection": {
+			"type": "equirectangular",
+			"lngMin": -19.0,
+			"latMax": 38.0,
+			"scale": 10.0
+		}
+	}
+}

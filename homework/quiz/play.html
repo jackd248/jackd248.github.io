@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <title>Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Warang+Citi&family=Roboto:wght@400;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="assets/style/style.css">
+</head>
+<body>
+<header>
+    <div id="progress" aria-hidden="true"></div>
+    <div id="comboDisplay" aria-live="polite"></div>
+    <div id="dailyStreak"></div>
+    <button type="button" data-theme-toggle aria-label="Farbschema umschalten">🌙</button>
+</header>
+<main>
+    <div id="intro">
+        <h1 id="setTitle"></h1>
+        <p id="modeLabel"></p>
+        <div id="highScore"></div>
+        <button type="button" id="startButton">🚀 Start</button>
+        <p><a class="button" href="index.html">← Alle Modi</a></p>
+    </div>
+
+    <div id="game" hidden>
+        <p id="questionModeLabel"></p>
+        <div id="prompt" aria-live="polite"></div>
+        <form id="answerForm">
+            <label for="answerInput">Antwort</label>
+            <input id="answerInput" name="answer" type="text" inputmode="text" autocomplete="off"
+                   autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" required/>
+            <button type="submit">✅ Antworten</button>
+        </form>
+        <div id="feedback" role="status"></div>
+
+        <section id="infoCard" hidden aria-labelledby="infoTitle">
+            <h2 id="infoTitle"></h2>
+            <dl id="infoFacts"></dl>
+            <p id="infoFootnote" hidden></p>
+            <div id="infoMap" role="img"></div>
+            <button type="button" id="nextButton">➡️ Weiter</button>
+        </section>
+    </div>
+
+    <div id="results" hidden>
+        <div id="resultEmoji"></div>
+        <div id="resultTime"></div>
+        <div id="resultDelta"></div>
+        <div id="highScoreResult"></div>
+        <h2>Deine Afrika-Karte</h2>
+        <div id="masteryMap" role="img"></div>
+        <button type="button" id="restartButton">🔁 Neue Runde</button>
+        <p><a class="button" href="index.html">← Alle Modi</a></p>
+    </div>
+</main>
+<footer>
+    <div id="life"></div>
+</footer>
+
+<script type="text/javascript" src="assets/script/darkmode.js" async></script>
+<script type="module">
+    import {QuizEngine} from './assets/script/engine.js';
+    import {recordRound, recordItemResult, getRoundProgress, getItemWeights, getAllMastery} from './assets/script/progress.js';
+
+    const REFERENCE_GROUP = 'reference';
+    const STREAK_EMOJI = [[10, '⚡'], [5, '🔥'], [1, '✨']];
+    const FOOTNOTES = {
+        ci: 'Yamoussoukro ist die offizielle Hauptstadt, Regierungssitz ist Abidjan.',
+        tz: 'Dodoma ist die offizielle Hauptstadt, Daressalam bleibt Wirtschaftszentrum und größte Stadt.',
+        za: 'Pretoria ist Regierungssitz. Kapstadt (Parlament) und Bloemfontein (Justiz) sind ebenfalls Hauptstädte.',
+    };
+
+    const params = new URLSearchParams(location.search);
+    const modeId = ['capital', 'country', 'mixed'].includes(params.get('mode')) ? params.get('mode') : 'capital';
+
+    const [set, mapSvgText] = await Promise.all([
+        fetch('assets/data/africa.json').then((r) => r.json()),
+        fetch('assets/media/africa.svg').then((r) => r.text()),
+    ]);
+
+    const pool = set.items.filter((item) => item.group !== REFERENCE_GROUP);
+    const referenceItem = set.items.find((item) => item.group === REFERENCE_GROUP);
+    const modeById = Object.fromEntries(set.modes.map((m) => [m.id, m]));
+
+    const engine = new QuizEngine({
+        items: pool,
+        modeId,
+        modes: set.modes,
+        getWeights: (itemIds) => getItemWeights(set.id, itemIds),
+    });
+
+    const el = (id) => document.getElementById(id);
+    const setTitle = el('setTitle');
+    const modeLabel = el('modeLabel');
+    const highScoreEl = el('highScore');
+    const startButton = el('startButton');
+    const introEl = el('intro');
+    const gameEl = el('game');
+    const resultsEl = el('results');
+    const questionModeLabel = el('questionModeLabel');
+    const promptEl = el('prompt');
+    const answerForm = el('answerForm');
+    const answerInput = el('answerInput');
+    const feedbackEl = el('feedback');
+    const infoCard = el('infoCard');
+    const infoTitle = el('infoTitle');
+    const infoFacts = el('infoFacts');
+    const infoFootnote = el('infoFootnote');
+    const infoMap = el('infoMap');
+    const nextButton = el('nextButton');
+    const lifeEl = el('life');
+    const progressEl = el('progress');
+    const comboDisplay = el('comboDisplay');
+    const dailyStreakEl = el('dailyStreak');
+    const resultEmoji = el('resultEmoji');
+    const resultTime = el('resultTime');
+    const resultDelta = el('resultDelta');
+    const highScoreResult = el('highScoreResult');
+    const masteryMap = el('masteryMap');
+    const restartButton = el('restartButton');
+
+    const modeLabelText = modeId === 'mixed' ? 'Gemischt' : modeById[modeId].label;
+    document.title = `${set.title} · ${modeLabelText}`;
+    setTitle.textContent = `${set.icon} ${set.title}`;
+    modeLabel.textContent = modeLabelText;
+
+    let roundStartTime = 0;
+    let pausedMs = 0;
+    let infoShownAt = 0;
+
+    function formatNumber(value) {
+        return value.toLocaleString('de-DE');
+    }
+
+    function formatTime(seconds) {
+        if (seconds < 60) {
+            return `${seconds.toFixed(1)} s`;
+        }
+        const minutes = Math.floor(seconds / 60);
+        const rest = Math.floor(seconds % 60).toString().padStart(2, '0');
+        return `${minutes}:${rest} min`;
+    }
+
+    function renderLife(life) {
+        lifeEl.innerHTML = '❤️'.repeat(life) + '🖤'.repeat(3 - life);
+    }
+
+    function renderProgress(index, total) {
+        progressEl.textContent = '✅'.repeat(index) + '⬜'.repeat(total - index);
+    }
+
+    function comboEmoji(streak) {
+        for (const [threshold, emoji] of STREAK_EMOJI) {
+            if (streak >= threshold) {
+                return emoji;
+            }
+        }
+        return '';
+    }
+
+    function renderCombo(streak, milestone) {
+        comboDisplay.textContent = streak > 0 ? `${comboEmoji(streak)} ${streak}` : '';
+        comboDisplay.classList.remove('milestone');
+        if (milestone) {
+            requestAnimationFrame(() => comboDisplay.classList.add('milestone'));
+        }
+    }
+
+    function renderHighScore(target, highscore) {
+        if (!highscore) {
+            target.innerHTML = '';
+            return;
+        }
+        target.innerHTML = `<strong>🥇 Highscore</strong><br/>${'❤️'.repeat(highscore.lives)}<br/>⌛ ${formatTime(highscore.time)}<br/>🔥 Combo ${highscore.bestStreak}<br/>📅 ${highscore.date}`;
+    }
+
+    function renderDailyStreak() {
+        const {dailyStreak} = getRoundProgress(set.id, modeId);
+        dailyStreakEl.innerHTML = `🔥 ${dailyStreak} Tage`;
+    }
+
+    function findPath(container, itemId) {
+        return container.querySelector(`#${set.map.pathIdPrefix}${itemId}`);
+    }
+
+    function projectPoint(svgEl, lat, lng) {
+        const lngMin = parseFloat(svgEl.dataset.lngMin);
+        const latMax = parseFloat(svgEl.dataset.latMax);
+        const scale = parseFloat(svgEl.dataset.scale);
+        return {x: (lng - lngMin) * scale, y: (latMax - lat) * scale};
+    }
+
+    function renderQuestionMap(item) {
+        infoMap.innerHTML = mapSvgText;
+        const svgEl = infoMap.querySelector('svg');
+        svgEl.setAttribute('aria-hidden', 'true');
+        const path = findPath(svgEl, item.id);
+        const [lat, lng] = item.coords.capital;
+        const {x, y} = projectPoint(svgEl, lat, lng);
+        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dot.setAttribute('cx', x.toFixed(2));
+        dot.setAttribute('cy', y.toFixed(2));
+
+        if (path) {
+            path.classList.add('active');
+            dot.setAttribute('r', '3');
+            dot.setAttribute('class', 'capital-dot');
+        } else {
+            dot.setAttribute('r', '5');
+            dot.setAttribute('class', 'capital-dot ring');
+        }
+        svgEl.appendChild(dot);
+        infoMap.setAttribute('aria-label', `Karte: ${item.name} hervorgehoben`);
+    }
+
+    function renderInfoCard(item) {
+        infoTitle.textContent = `${item.name} · ${item.capital}`;
+
+        infoFacts.innerHTML = '';
+        const group = set.groups.find((g) => g.id === item.group);
+        if (group) {
+            const dt = document.createElement('dt');
+            dt.textContent = 'Region';
+            const dd = document.createElement('dd');
+            dd.textContent = group.label;
+            infoFacts.append(dt, dd);
+        }
+        for (const fact of set.facts) {
+            const value = item.facts[fact.key];
+            if (value === undefined) {
+                continue;
+            }
+            const dt = document.createElement('dt');
+            dt.textContent = fact.label;
+            const dd = document.createElement('dd');
+            dd.textContent = `${formatNumber(value)} ${fact.unit}`;
+            infoFacts.append(dt, dd);
+        }
+
+        const densityFact = set.facts.find((fact) => fact.key === 'densitySheet');
+        if (referenceItem && densityFact && item.facts[densityFact.key] !== undefined) {
+            const dt = document.createElement('dt');
+            dt.textContent = `Dichte ${referenceItem.name}`;
+            const dd = document.createElement('dd');
+            dd.textContent = `${formatNumber(referenceItem.facts[densityFact.key])} ${densityFact.unit}`;
+            infoFacts.append(dt, dd);
+        }
+
+        const footnote = FOOTNOTES[item.id];
+        infoFootnote.hidden = !footnote;
+        infoFootnote.textContent = footnote || '';
+
+        renderQuestionMap(item);
+        infoCard.hidden = false;
+    }
+
+    function renderQuestion(question) {
+        questionModeLabel.textContent = question.mode.label;
+        promptEl.textContent = question.promptText;
+        answerInput.value = '';
+        answerInput.classList.remove('correct', 'wrong');
+        feedbackEl.textContent = '';
+        feedbackEl.classList.remove('almost', 'wrong');
+        infoCard.hidden = true;
+        renderProgress(question.index, question.total);
+        answerInput.focus();
+    }
+
+    function flash(className) {
+        document.body.classList.add(className);
+        setTimeout(() => document.body.classList.remove(className), 1000);
+    }
+
+    function startRound() {
+        const question = engine.startRound();
+        roundStartTime = Date.now();
+        pausedMs = 0;
+        introEl.hidden = true;
+        resultsEl.hidden = true;
+        gameEl.hidden = false;
+        dailyStreakEl.hidden = true;
+        renderLife(engine.life);
+        renderCombo(0, null);
+        renderQuestion(question);
+    }
+
+    function endRound(won) {
+        const elapsed = (Date.now() - roundStartTime - pausedMs) / 1000;
+        const {highscore, deltaSeconds} = recordRound(set.id, modeId, {
+            time: elapsed,
+            lives: engine.life,
+            bestStreak: engine.bestStreak,
+            won,
+        });
+
+        gameEl.hidden = true;
+        resultsEl.hidden = false;
+        dailyStreakEl.hidden = false;
+        resultEmoji.textContent = won ? '🏆' : '☠️';
+        resultTime.textContent = formatTime(elapsed);
+        resultDelta.textContent = deltaSeconds !== null
+            ? (deltaSeconds > 0 ? `${deltaSeconds.toFixed(1)} s schneller als beim letzten Sieg` : `${Math.abs(deltaSeconds).toFixed(1)} s langsamer als beim letzten Sieg`)
+            : '';
+        renderHighScore(highScoreResult, highscore);
+        renderDailyStreak();
+        renderMasteryMap();
+        restartButton.focus();
+    }
+
+    function renderMasteryMap() {
+        masteryMap.innerHTML = mapSvgText;
+        const svgEl = masteryMap.querySelector('svg');
+        svgEl.setAttribute('aria-hidden', 'true');
+        const mastery = getAllMastery(set.id, pool.map((item) => item.id));
+        for (const item of pool) {
+            const path = findPath(svgEl, item.id);
+            if (!path) {
+                continue;
+            }
+            const level = mastery[item.id];
+            if (level !== 'none') {
+                path.classList.add(`mastery-${level}`);
+            }
+        }
+        masteryMap.setAttribute('aria-label', 'Übersichtskarte deines Lernstands: eingefärbte Länder wurden bereits richtig beantwortet');
+    }
+
+    answerForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const question = engine.currentQuestion;
+        const result = engine.submit(answerInput.value);
+
+        renderLife(result.life);
+        renderCombo(result.streak, result.milestone);
+        recordItemResult(set.id, question.item.id, result.status !== 'wrong');
+
+        if (result.status === 'wrong') {
+            flash('flash-red');
+            answerInput.classList.add('wrong');
+            feedbackEl.textContent = `Leider falsch. Richtig ist: ${result.canonical}`;
+            feedbackEl.classList.add('wrong');
+        } else {
+            flash('flash-green');
+            answerInput.classList.add('correct');
+            if (result.status === 'almost') {
+                feedbackEl.textContent = `Fast richtig! Meintest du: ${result.canonical}?`;
+                feedbackEl.classList.add('almost');
+            }
+        }
+
+        infoShownAt = Date.now();
+        renderInfoCard(question.item);
+        nextButton.focus();
+    });
+
+    nextButton.addEventListener('click', () => {
+        pausedMs += Date.now() - infoShownAt;
+        const result = engine.advance();
+        if (result.roundOver) {
+            endRound(result.won);
+        } else {
+            renderQuestion(result.question);
+        }
+    });
+
+    startButton.addEventListener('click', startRound);
+    restartButton.addEventListener('click', startRound);
+
+    renderHighScore(highScoreEl, getRoundProgress(set.id, modeId).highscore);
+    renderDailyStreak();
+</script>
+</body>
+</html>
