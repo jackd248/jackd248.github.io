@@ -32,10 +32,13 @@ ALPHA2_TO_ALPHA3 = {
     "de": "DEU",
 }
 
-# Countries deliberately left without a path: too small in this simplified
-# outline (Mauritius), or not part of the Africa map at all (the Germany
-# reference row, per KONZEPT §8).
-KNOWN_SKIPS = {"mu", "de"}
+# Countries deliberately left without a path, both skipped when drawing paths.
+# Mauritius is too small for this simplified outline but still gets a capital
+# dot (KONZEPT §8), so its point must stay inside the viewBox. Germany is the
+# reference row and isn't shown on the map at all.
+POINT_ONLY_ON_MAP = {"mu"}
+EXCLUDED_FROM_MAP = {"de"}
+KNOWN_SKIPS = POINT_ONLY_ON_MAP | EXCLUDED_FROM_MAP
 
 # All African sovereign states (ISO alpha-3), quiz items or not. Drawn as
 # muted "context" background so the continent looks whole instead of
@@ -127,6 +130,14 @@ def main():
 
     if skipped:
         print(f"WARNING: no geometry found for: {', '.join(skipped)}", file=sys.stderr)
+
+    for item in africa["items"]:
+        if item["id"] not in POINT_ONLY_ON_MAP:
+            continue
+        lat, lng = item["coords"]["capital"]
+        x, y = project(lng, lat, projection)
+        bounds["min_x"], bounds["max_x"] = min(bounds["min_x"], x), max(bounds["max_x"], x)
+        bounds["min_y"], bounds["max_y"] = min(bounds["min_y"], y), max(bounds["max_y"], y)
 
     paths = context_paths + quiz_paths
     margin = 5
